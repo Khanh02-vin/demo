@@ -24,7 +24,7 @@ void main() {
 }
 
 final _router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/color-detector',
   errorBuilder: (context, state) => const NotFoundScreen(),
   routes: [
     ShellRoute(

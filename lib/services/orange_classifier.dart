@@ -140,23 +140,23 @@ class OrangeClassifier {
           final colorKey = "${(hsv[0] * 36).floor()}";
           colorCounts[colorKey] = (colorCounts[colorKey] ?? 0) + 1;
 
-          // Enhanced detection using HSV space
-          bool isOrangeHue = (hsv[0] >= 0.03 && hsv[0] <= 0.17); // 10-60 degrees
+          // Enhanced detection using HSV space - stricter orange hue range
+          bool isOrangeHue = (hsv[0] >= 0.04 && hsv[0] <= 0.14); // 15-50 degrees - narrower orange range
           
           if (isOrangeHue && 
-              hsv[1] > 0.3 && // Must be somewhat saturated
-              hsv[2] > 0.2 && // Not too dark
+              hsv[1] > 0.4 && // Higher saturation requirement
+              hsv[2] > 0.25 && // Not too dark
               pixel.r > pixel.g && pixel.g > pixel.b) { // RGB relationship
             orangePixels++;
           }
-          // Also check using traditional RGB method as fallback
-          else if ((pixel.r > 120 && // Red component is significant
-               pixel.g > 50 && pixel.g < 220 && // Medium green
-               pixel.b < 100 && // Low blue
-               pixel.r > pixel.g * 1.1 && // Red notably higher than green
-               pixel.g > pixel.b * 1.2) || // Green notably higher than blue
+          // Also check using traditional RGB method as fallback - with stricter conditions
+          else if ((pixel.r > 150 && // Higher red component requirement
+               pixel.g > 50 && pixel.g < 180 && // Narrower green range
+               pixel.b < 80 && // Lower blue threshold
+               pixel.r > pixel.g * 1.3 && // Red must be significantly higher than green
+               pixel.g > pixel.b * 1.4) || // Green must be significantly higher than blue
               // Additional check for brighter oranges
-              (pixel.r > 180 && pixel.g > 80 && pixel.g < 170 && pixel.b < 80)) {
+              (pixel.r > 200 && pixel.g > 100 && pixel.g < 160 && pixel.b < 70)) {
             orangePixels++;
           }
           totalSamples++;
@@ -169,28 +169,44 @@ class OrangeClassifier {
       
       // Analyze color distribution for better decision
       bool hasOrangePeak = false;
+      int orangeHueCount = 0;
+      int totalColors = 0;
+      
       if (colorCounts.isNotEmpty) {
+        // Check the proportion of orange hues in the image
+        for (final entry in colorCounts.entries) {
+          final hue = int.parse(entry.key) / 36;
+          totalColors += entry.value;
+          
+          if (hue >= 0.04 && hue <= 0.14) { // Orange hue range
+            orangeHueCount += entry.value;
+          }
+        }
+        
         // Sort colors by frequency
         final sortedColors = colorCounts.entries.toList()
           ..sort((a, b) => b.value.compareTo(a.value));
         
-        // Check if any top colors are in orange range
-        for (int i = 0; i < min(3, sortedColors.length); i++) {
+        // Check if any top colors are in orange range (must be in top 2 colors)
+        for (int i = 0; i < min(2, sortedColors.length); i++) {
           final hue = int.parse(sortedColors[i].key) / 36;
-          if (hue >= 0.03 && hue <= 0.17) {
+          if (hue >= 0.04 && hue <= 0.14) {
             hasOrangePeak = true;
             break;
           }
         }
       }
       
-      debugPrint("Enhanced orange detection: ratio=$orangeRatio, hasOrangePeak=$hasOrangePeak");
+      // Calculate the proportion of orange hues
+      final orangeHueRatio = totalColors > 0 ? orangeHueCount / totalColors : 0.0;
       
-      // Improved decision logic with adaptive threshold
-      if (orangeRatio > 0.2) {
+      debugPrint("Enhanced orange detection: ratio=$orangeRatio, orangeHueRatio=$orangeHueRatio, hasOrangePeak=$hasOrangePeak");
+      
+      // Stricter decision logic with multiple conditions
+      if (orangeRatio > 0.35) {
         return true; // Strong orange presence
-      } else if (orangeRatio > 0.12 && hasOrangePeak) {
-        return true; // Moderate orange with dominant orange hue
+      } else if (orangeRatio > 0.25 && hasOrangePeak && orangeHueRatio > 0.3) {
+        return true; // Moderate orange that's a dominant color
       }
       
       return false;

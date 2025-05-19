@@ -23,30 +23,35 @@ class ClassificationResult {
   bool get isValid => errorMessage == null;
   
   /// Returns true if the classification is likely an orange
-  /// This is more lenient to handle placeholder model issues
+  /// Uses stricter criteria to avoid false positives
   bool get isOrange {
     // If there's an error, it's not an orange
     if (!isValid) return false;
     
-    // If primary classification contains certain keywords or has high confidence, it's an orange
-    if (primaryLabel.toLowerCase().contains('quality') || 
-        primaryLabel.toLowerCase().contains('orange') ||
-        primaryLabel.toLowerCase().contains('good') ||
-        primaryConfidence > 0.3) {
+    // Check for explicit "Not an Orange" label
+    if (primaryLabel.toLowerCase().contains('not an orange') || 
+        primaryLabel.toLowerCase() == 'not orange') {
+      return false;
+    }
+    
+    // Check if primary label contains specific orange-related terms
+    // and has sufficient confidence
+    if ((primaryLabel.toLowerCase().contains('orange') || 
+         primaryLabel.toLowerCase().contains('quality')) && 
+        primaryConfidence > 0.45) {
       return true;
     }
     
     // Check fallback classification if used
-    if (usedFallback && fallbackLabel != null) {
-      if (fallbackLabel!.toLowerCase().contains('fruit') ||
-          fallbackLabel!.toLowerCase().contains('citrus') ||
-          fallbackLabel!.toLowerCase().contains('orange') ||
-          (fallbackConfidence != null && fallbackConfidence! > 0.3)) {
+    if (usedFallback && fallbackLabel != null && fallbackConfidence != null) {
+      if ((fallbackLabel!.toLowerCase().contains('citrus') ||
+          fallbackLabel!.toLowerCase().contains('orange')) &&
+          fallbackConfidence! > 0.45) {
         return true;
       }
     }
     
-    // Default to false only if we have strong evidence it's not an orange
+    // Default to false when uncertain
     return false;
   }
   
