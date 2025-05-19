@@ -2,6 +2,7 @@
 Makefile linguist-detectable=false
 *.mk linguist-detectable=false
 Makefile.* linguist-detectable=false
-
 # Also exclude build artifacts from language statistics
 build/* linguist-generated=true
+*.framework/Flutter filter=lfs diff=lfs merge=lfs -text
+*.framework.dSYM/** filter=lfs diff=lfs merge=lfs -text
