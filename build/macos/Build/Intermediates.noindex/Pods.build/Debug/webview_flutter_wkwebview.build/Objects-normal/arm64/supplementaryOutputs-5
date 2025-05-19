@@ -1,0 +1,24 @@
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/ScrollViewDelegateProxyAPIDelegate.swift":
+  swift-dependencies: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScrollViewDelegateProxyAPIDelegate.swiftdeps"
+  const-values: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScrollViewDelegateProxyAPIDelegate.swiftconstvalues"
+  object: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScrollViewDelegateProxyAPIDelegate.o"
+  dependencies: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScrollViewDelegateProxyAPIDelegate.d"
+  diagnostics: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScrollViewDelegateProxyAPIDelegate.dia"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/ScriptMessageProxyAPIDelegate.swift":
+  dependencies: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScriptMessageProxyAPIDelegate.d"
+  const-values: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScriptMessageProxyAPIDelegate.swiftconstvalues"
+  diagnostics: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScriptMessageProxyAPIDelegate.dia"
+  object: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScriptMessageProxyAPIDelegate.o"
+  swift-dependencies: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScriptMessageProxyAPIDelegate.swiftdeps"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/SecCertificateProxyAPIDelegate.swift":
+  dependencies: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/SecCertificateProxyAPIDelegate.d"
+  swift-dependencies: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/SecCertificateProxyAPIDelegate.swiftdeps"
+  object: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/SecCertificateProxyAPIDelegate.o"
+  diagnostics: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/SecCertificateProxyAPIDelegate.dia"
+  const-values: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/SecCertificateProxyAPIDelegate.swiftconstvalues"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/ScrollViewProxyAPIDelegate.swift":
+  swift-dependencies: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScrollViewProxyAPIDelegate.swiftdeps"
+  const-values: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScrollViewProxyAPIDelegate.swiftconstvalues"
+  diagnostics: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScrollViewProxyAPIDelegate.dia"
+  dependencies: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScrollViewProxyAPIDelegate.d"
+  object: "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScrollViewProxyAPIDelegate.o"

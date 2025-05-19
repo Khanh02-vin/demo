@@ -1,0 +1,18 @@
+{
+  "" : {
+    "diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/flutter_local_notifications-master.dia",
+    "emit-module-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/flutter_local_notifications-master-emit-module.d",
+    "emit-module-diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/flutter_local_notifications-master-emit-module.dia",
+    "swift-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/flutter_local_notifications-master.swiftdeps"
+  },
+  "/Users/maccredyreina/.pub-cache/hosted/pub.dev/flutter_local_notifications-16.3.3/macos/Classes/FlutterLocalNotificationsPlugin.swift" : {
+    "const-values" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/FlutterLocalNotificationsPlugin.swiftconstvalues",
+    "dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/FlutterLocalNotificationsPlugin.d",
+    "diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/FlutterLocalNotificationsPlugin.dia",
+    "index-unit-output-path" : "/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/FlutterLocalNotificationsPlugin.o",
+    "llvm-bc" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/FlutterLocalNotificationsPlugin.bc",
+    "object" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/FlutterLocalNotificationsPlugin.o",
+    "swift-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/FlutterLocalNotificationsPlugin.swiftdeps",
+    "swiftmodule" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/flutter_local_notifications.build/Objects-normal/arm64/FlutterLocalNotificationsPlugin~partial.swiftmodule"
+  }
+}

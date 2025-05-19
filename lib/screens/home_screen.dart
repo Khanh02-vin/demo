@@ -137,6 +137,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             tooltip: 'Test ML Model',
             onPressed: () => context.push('/model-test'),
           ),
+          IconButton(
+            icon: const Icon(Icons.dataset),
+            tooltip: 'Test Data Images',
+            onPressed: () => context.push('/test-data'),
+          ),
         ],
       ),
       body: _isCameraInitialized 

@@ -10,6 +10,7 @@ import 'package:orange_quality_checker/screens/model_details_screen.dart';
 import 'package:orange_quality_checker/screens/orange_classifier_screen.dart';
 import 'package:orange_quality_checker/screens/not_found_screen.dart';
 import 'package:orange_quality_checker/screens/model_test_screen.dart';
+import 'package:orange_quality_checker/screens/test_data_screen.dart';
 import 'package:orange_quality_checker/providers/app_provider.dart';
 
 void main() {
@@ -69,6 +70,10 @@ final _router = GoRouter(
     GoRoute(
       path: '/model-test',
       builder: (context, state) => const ModelTestScreen(),
+    ),
+    GoRoute(
+      path: '/test-data',
+      builder: (context, state) => const TestDataScreen(),
     ),
   ],
 );

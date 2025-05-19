@@ -82,6 +82,10 @@ flutter:
   assets:
     - assets/images/
     - assets/ml_models/
+    - assets/images/old_oranges_data/test_set/Orange_Bad/
+    - assets/images/old_oranges_data/test_set/Orange_Good/
+    - assets/images/old_oranges_data/train_set/Orange_Bad/
+    - assets/images/old_oranges_data/train_set/Orange_Good/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

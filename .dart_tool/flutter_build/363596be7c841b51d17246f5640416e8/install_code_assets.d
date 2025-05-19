@@ -1,0 +1,1 @@
+ /Volumes/rmina/04.\ Code/Flutter/code\ 3\ 2/.dart_tool/flutter_build/363596be7c841b51d17246f5640416e8/native_assets.json: 
