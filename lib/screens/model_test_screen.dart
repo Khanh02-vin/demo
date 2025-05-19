@@ -1,20 +1,38 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../services/orange_classifier.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import '../services/orange_classifier.dart';
 import '../models/classification_result.dart';
+import '../providers/app_provider.dart';
 
-class ModelTestScreen extends StatefulWidget {
+class ModelTestScreen extends ConsumerStatefulWidget {
   const ModelTestScreen({super.key});
 
   @override
-  State<ModelTestScreen> createState() => _ModelTestScreenState();
+  ConsumerState<ModelTestScreen> createState() => _ModelTestScreenState();
 }
 
-class _ModelTestScreenState extends State<ModelTestScreen> {
+class _ModelTestScreenState extends ConsumerState<ModelTestScreen> {
   bool _isLoading = false;
   File? _imageFile;
   ClassificationResult? _classificationResult;
+  
+  @override
+  void initState() {
+    super.initState();
+    
+    // Restore image if available
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final savedImagePath = ref.read(selectedImageProvider);
+      if (savedImagePath != null) {
+        setState(() {
+          _imageFile = File(savedImagePath);
+        });
+        _classifyImage(); // Reclassify the restored image
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -281,6 +299,9 @@ class _ModelTestScreenState extends State<ModelTestScreen> {
           _imageFile = File(pickedFile.path);
           _classificationResult = null;
         });
+        
+        // Save to provider for persistence
+        ref.read(selectedImageProvider.notifier).state = pickedFile.path;
         
         // Process the image
         await _classifyImage();

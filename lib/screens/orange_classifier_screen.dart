@@ -1,18 +1,20 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/orange_classifier.dart';
 import '../models/classification_result.dart';
 import '../widgets/enhanced_result_display.dart';
+import '../providers/app_provider.dart';
 
-class OrangeClassifierScreen extends StatefulWidget {
+class OrangeClassifierScreen extends ConsumerStatefulWidget {
   const OrangeClassifierScreen({super.key});
 
   @override
-  State<OrangeClassifierScreen> createState() => _OrangeClassifierScreenState();
+  ConsumerState<OrangeClassifierScreen> createState() => _OrangeClassifierScreenState();
 }
 
-class _OrangeClassifierScreenState extends State<OrangeClassifierScreen> {
+class _OrangeClassifierScreenState extends ConsumerState<OrangeClassifierScreen> {
   final OrangeClassifier _classifier = OrangeClassifier();
   final ImagePicker _picker = ImagePicker();
   
@@ -25,6 +27,16 @@ class _OrangeClassifierScreenState extends State<OrangeClassifierScreen> {
     super.initState();
     // Preload the models
     _loadModels();
+    
+    // Restore image if available
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final savedImagePath = ref.read(selectedCameraImageProvider);
+      if (savedImagePath != null) {
+        setState(() {
+          _image = File(savedImagePath);
+        });
+      }
+    });
   }
   
   Future<void> _loadModels() async {
@@ -51,6 +63,9 @@ class _OrangeClassifierScreenState extends State<OrangeClassifierScreen> {
         _result = null;
         _isLoading = true;
       });
+      
+      // Save to provider for persistence
+      ref.read(selectedCameraImageProvider.notifier).state = pickedFile.path;
       
       // Make sure models are loaded
       try {

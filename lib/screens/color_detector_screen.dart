@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:go_router/go_router.dart';
 import '../providers/history_provider.dart';
+import '../providers/app_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ColorDetectorScreen extends ConsumerStatefulWidget {
@@ -39,6 +40,16 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
       curve: Curves.easeOutBack,
     );
     _animationController.forward();
+    
+    // Restore image if available
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final savedImagePath = ref.read(selectedImageProvider);
+      if (savedImagePath != null) {
+        setState(() {
+          _selectedImage = File(savedImagePath);
+        });
+      }
+    });
   }
   
   @override
@@ -253,6 +264,9 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
         _selectedImage = imageFile;
         _status = 'Analyzing image...';
       });
+      
+      // Save to provider for persistence
+      ref.read(selectedImageProvider.notifier).state = image.path;
       
       // Check if this is an orange by color first
       final isOrange = await isLikelyOrangeByColor(imageFile);
