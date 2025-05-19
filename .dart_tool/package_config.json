@@ -39,7 +39,7 @@
     },
     {
       "name": "camera_android",
-      "rootUri": "file:///Users/maccredyreina/.pub-cache/hosted/pub.dev/camera_android-0.10.10+2",
+      "rootUri": "file:///Users/maccredyreina/.pub-cache/hosted/pub.dev/camera_android-0.10.10+3",
       "packageUri": "lib/",
       "languageVersion": "3.6"
     },
@@ -758,7 +758,7 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-05-09T17:49:04.683361Z",
+  "generated": "2025-05-19T16:29:45.479802Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///Users/maccredyreina/development/flutter",
