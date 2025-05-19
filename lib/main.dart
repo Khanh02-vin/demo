@@ -13,6 +13,7 @@ import 'package:orange_quality_checker/screens/model_test_screen.dart';
 import 'package:orange_quality_checker/screens/test_data_screen.dart';
 import 'package:orange_quality_checker/screens/color_detector_screen.dart';
 import 'package:orange_quality_checker/providers/app_provider.dart';
+import 'package:orange_quality_checker/constants/app_theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -95,18 +96,12 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
+          seedColor: const Color(0xFFFF8C00),
           brightness: Brightness.light,
         ),
         useMaterial3: true,
       ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
+      darkTheme: AppTheme.darkTheme,
       themeMode: themeMode,
       routerConfig: _router,
     );
@@ -121,43 +116,57 @@ class MainShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF121212),
+      backgroundColor: AppTheme.darkBackground,
       body: child,
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: const Color(0xFF1E1E1E),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.camera_alt_outlined),
-            selectedIcon: Icon(Icons.camera_alt),
-            label: 'Detector',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.history_outlined),
-            selectedIcon: Icon(Icons.history),
-            label: 'History',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        onDestinationSelected: (index) {
-          switch (index) {
-            case 0:
-              context.go('/color-detector');
-              break;
-            case 1:
-              context.go('/history');
-              break;
-            case 2:
-              context.go('/settings');
-              break;
-          }
-        },
-        selectedIndex: _calculateSelectedIndex(context),
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-        indicatorColor: Colors.orange.shade700.withOpacity(0.4),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: AppTheme.cardDark,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: NavigationBar(
+          backgroundColor: AppTheme.cardDark,
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.camera_alt_outlined),
+              selectedIcon: Icon(Icons.camera_alt),
+              label: 'Detector',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.history_outlined),
+              selectedIcon: Icon(Icons.history),
+              label: 'History',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.settings_outlined),
+              selectedIcon: Icon(Icons.settings),
+              label: 'Settings',
+            ),
+          ],
+          onDestinationSelected: (index) {
+            switch (index) {
+              case 0:
+                context.go('/color-detector');
+                break;
+              case 1:
+                context.go('/history');
+                break;
+              case 2:
+                context.go('/settings');
+                break;
+            }
+          },
+          selectedIndex: _calculateSelectedIndex(context),
+          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+          indicatorColor: AppTheme.primaryColor.withOpacity(0.3),
+          elevation: 0,
+          height: 65,
+        ),
       ),
     );
   }
