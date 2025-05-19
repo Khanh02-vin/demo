@@ -11,6 +11,7 @@ import 'package:orange_quality_checker/screens/orange_classifier_screen.dart';
 import 'package:orange_quality_checker/screens/not_found_screen.dart';
 import 'package:orange_quality_checker/screens/model_test_screen.dart';
 import 'package:orange_quality_checker/screens/test_data_screen.dart';
+import 'package:orange_quality_checker/screens/color_detector_screen.dart';
 import 'package:orange_quality_checker/providers/app_provider.dart';
 
 void main() {
@@ -66,6 +67,10 @@ final _router = GoRouter(
     GoRoute(
       path: '/orange-classifier',
       builder: (context, state) => const OrangeClassifierScreen(),
+    ),
+    GoRoute(
+      path: '/color-detector',
+      builder: (context, state) => const ColorDetectorScreen(),
     ),
     GoRoute(
       path: '/model-test',

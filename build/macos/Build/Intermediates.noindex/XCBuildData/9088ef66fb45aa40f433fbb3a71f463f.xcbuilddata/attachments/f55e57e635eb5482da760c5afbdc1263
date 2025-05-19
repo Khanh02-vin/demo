@@ -1,0 +1,18 @@
+{
+  "" : {
+    "diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/tflite_flutter-master.dia",
+    "emit-module-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/tflite_flutter-master-emit-module.d",
+    "emit-module-diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/tflite_flutter-master-emit-module.dia",
+    "swift-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/tflite_flutter-master.swiftdeps"
+  },
+  "/Users/maccredyreina/.pub-cache/hosted/pub.dev/tflite_flutter-0.11.0/macos/Classes/TfliteFlutterPlugin.swift" : {
+    "const-values" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/TfliteFlutterPlugin.swiftconstvalues",
+    "dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/TfliteFlutterPlugin.d",
+    "diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/TfliteFlutterPlugin.dia",
+    "index-unit-output-path" : "/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/TfliteFlutterPlugin.o",
+    "llvm-bc" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/TfliteFlutterPlugin.bc",
+    "object" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/TfliteFlutterPlugin.o",
+    "swift-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/TfliteFlutterPlugin.swiftdeps",
+    "swiftmodule" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/tflite_flutter.build/Objects-normal/arm64/TfliteFlutterPlugin~partial.swiftmodule"
+  }
+}

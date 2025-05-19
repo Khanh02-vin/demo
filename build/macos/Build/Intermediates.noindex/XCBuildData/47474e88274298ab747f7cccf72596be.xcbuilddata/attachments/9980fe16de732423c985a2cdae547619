@@ -1,0 +1,48 @@
+{
+  "" : {
+    "diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/Runner-master.dia",
+    "emit-module-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/Runner-master-emit-module.d",
+    "emit-module-diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/Runner-master-emit-module.dia",
+    "swift-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/Runner-master.swiftdeps"
+  },
+  "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  },
+  "/Volumes/rmina/04. Code/Flutter/code 3 2/macos/Flutter/GeneratedPluginRegistrant.swift" : {
+    "const-values" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedPluginRegistrant.swiftconstvalues",
+    "dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedPluginRegistrant.d",
+    "diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedPluginRegistrant.dia",
+    "index-unit-output-path" : "/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedPluginRegistrant.o",
+    "llvm-bc" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedPluginRegistrant.bc",
+    "object" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedPluginRegistrant.o",
+    "swift-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedPluginRegistrant.swiftdeps",
+    "swiftmodule" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/GeneratedPluginRegistrant~partial.swiftmodule"
+  },
+  "/Volumes/rmina/04. Code/Flutter/code 3 2/macos/Runner/AppDelegate.swift" : {
+    "const-values" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/AppDelegate.swiftconstvalues",
+    "dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/AppDelegate.d",
+    "diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/AppDelegate.dia",
+    "index-unit-output-path" : "/Runner.build/Debug/Runner.build/Objects-normal/arm64/AppDelegate.o",
+    "llvm-bc" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/AppDelegate.bc",
+    "object" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/AppDelegate.o",
+    "swift-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/AppDelegate.swiftdeps",
+    "swiftmodule" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/AppDelegate~partial.swiftmodule"
+  },
+  "/Volumes/rmina/04. Code/Flutter/code 3 2/macos/Runner/MainFlutterWindow.swift" : {
+    "const-values" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/MainFlutterWindow.swiftconstvalues",
+    "dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/MainFlutterWindow.d",
+    "diagnostics" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/MainFlutterWindow.dia",
+    "index-unit-output-path" : "/Runner.build/Debug/Runner.build/Objects-normal/arm64/MainFlutterWindow.o",
+    "llvm-bc" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/MainFlutterWindow.bc",
+    "object" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/MainFlutterWindow.o",
+    "swift-dependencies" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/MainFlutterWindow.swiftdeps",
+    "swiftmodule" : "/Volumes/rmina/04. Code/Flutter/code 3 2/build/macos/Build/Intermediates.noindex/Runner.build/Debug/Runner.build/Objects-normal/arm64/MainFlutterWindow~partial.swiftmodule"
+  }
+}

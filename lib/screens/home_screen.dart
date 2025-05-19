@@ -133,6 +133,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onPressed: () => context.push('/orange-classifier'),
           ),
           IconButton(
+            icon: const Icon(Icons.color_lens),
+            tooltip: 'Color Detector (No ML)',
+            onPressed: () => context.push('/color-detector'),
+          ),
+          IconButton(
             icon: const Icon(Icons.science),
             tooltip: 'Test ML Model',
             onPressed: () => context.push('/model-test'),
