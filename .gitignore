@@ -9,3 +9,4 @@ expo-env.d.ts
 /cursor-memory-bank/
 /.cursor/
 node_modules
+/build/
