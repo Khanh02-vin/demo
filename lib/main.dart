@@ -44,6 +44,10 @@ final _router = GoRouter(
           path: '/settings',
           builder: (context, state) => const SettingsScreen(),
         ),
+        GoRoute(
+          path: '/color-detector',
+          builder: (context, state) => const ColorDetectorScreen(),
+        ),
       ],
     ),
     GoRoute(
@@ -69,10 +73,6 @@ final _router = GoRouter(
       builder: (context, state) => const OrangeClassifierScreen(),
     ),
     GoRoute(
-      path: '/color-detector',
-      builder: (context, state) => const ColorDetectorScreen(),
-    ),
-    GoRoute(
       path: '/model-test',
       builder: (context, state) => const ModelTestScreen(),
     ),
@@ -91,7 +91,7 @@ class MyApp extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider);
     
     return MaterialApp.router(
-      title: 'Expo App',
+      title: 'Orange Quality Checker',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -121,13 +121,15 @@ class MainShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF121212),
       body: child,
       bottomNavigationBar: NavigationBar(
+        backgroundColor: const Color(0xFF1E1E1E),
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.camera_alt_outlined),
+            selectedIcon: Icon(Icons.camera_alt),
+            label: 'Detector',
           ),
           NavigationDestination(
             icon: Icon(Icons.history_outlined),
@@ -143,7 +145,7 @@ class MainShell extends StatelessWidget {
         onDestinationSelected: (index) {
           switch (index) {
             case 0:
-              context.go('/');
+              context.go('/color-detector');
               break;
             case 1:
               context.go('/history');
@@ -154,13 +156,15 @@ class MainShell extends StatelessWidget {
           }
         },
         selectedIndex: _calculateSelectedIndex(context),
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        indicatorColor: Colors.orange.shade700.withOpacity(0.4),
       ),
     );
   }
   
   int _calculateSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).matchedLocation;
-    if (location == '/') {
+    if (location == '/color-detector') {
       return 0;
     }
     if (location == '/history') {

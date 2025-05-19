@@ -158,6 +158,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "fixnum",
+      "rootUri": "file:///Users/maccredyreina/.pub-cache/hosted/pub.dev/fixnum-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "fl_chart",
       "rootUri": "file:///Users/maccredyreina/.pub-cache/hosted/pub.dev/fl_chart-0.65.0",
       "packageUri": "lib/",
@@ -560,6 +566,12 @@
       "languageVersion": "3.1"
     },
     {
+      "name": "sprintf",
+      "rootUri": "file:///Users/maccredyreina/.pub-cache/hosted/pub.dev/sprintf-7.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "stack_trace",
       "rootUri": "file:///Users/maccredyreina/.pub-cache/hosted/pub.dev/stack_trace-1.12.1",
       "packageUri": "lib/",
@@ -674,6 +686,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "uuid",
+      "rootUri": "file:///Users/maccredyreina/.pub-cache/hosted/pub.dev/uuid-4.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "vector_graphics",
       "rootUri": "file:///Users/maccredyreina/.pub-cache/hosted/pub.dev/vector_graphics-1.1.18",
       "packageUri": "lib/",
@@ -758,7 +776,7 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-05-19T16:43:29.621570Z",
+  "generated": "2025-05-19T17:30:29.354043Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///Users/maccredyreina/development/flutter",
