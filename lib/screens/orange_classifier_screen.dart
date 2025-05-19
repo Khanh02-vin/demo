@@ -35,6 +35,11 @@ class _OrangeClassifierScreenState extends ConsumerState<OrangeClassifierScreen>
         setState(() {
           _image = File(savedImagePath);
         });
+        
+        // Reclassify the image since we don't store the classification results
+        if (_image != null) {
+          _classifyRestoredImage();
+        }
       }
     });
   }
@@ -95,6 +100,33 @@ class _OrangeClassifierScreenState extends ConsumerState<OrangeClassifierScreen>
       return !result.toString().contains('Failed to load');
     } catch (e) {
       return false;
+    }
+  }
+  
+  // Additional method to classify a restored image
+  Future<void> _classifyRestoredImage() async {
+    setState(() {
+      _isLoading = true;
+    });
+    
+    // Make sure models are loaded
+    try {
+      if (!await _modelsAreLoaded()) {
+        await _classifier.loadModels();
+      }
+      
+      // Classify the image
+      final result = await _classifier.classifyImage(_image!);
+      
+      setState(() {
+        _result = result;
+        _isLoading = false;
+      });
+    } catch (e) {
+      debugPrint('Error classifying restored image: $e');
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
   

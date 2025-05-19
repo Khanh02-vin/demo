@@ -48,6 +48,18 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
         setState(() {
           _selectedImage = File(savedImagePath);
         });
+        
+        // Restore analysis results if available
+        final savedResults = ref.read(analysisResultProvider);
+        final shouldShowResults = ref.read(showResultsProvider);
+        
+        if (savedResults != null && shouldShowResults) {
+          setState(() {
+            _analysisResult = savedResults;
+            _showResults = shouldShowResults;
+          });
+          _animationController.forward(from: 0.0);
+        }
       }
     });
   }
@@ -250,6 +262,10 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
         _showResults = false;
       });
       
+      // Clear previous results
+      ref.read(analysisResultProvider.notifier).state = null;
+      ref.read(showResultsProvider.notifier).state = false;
+      
       final XFile? image = await _picker.pickImage(source: source);
       if (image == null) {
         setState(() {
@@ -272,18 +288,25 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
       final isOrange = await isLikelyOrangeByColor(imageFile);
       
       if (!isOrange) {
+        final results = {
+          'isOrange': false,
+          'quality': 'unknown',
+          'colorConsistency': 0.0,
+          'surfaceIrregularities': 0.0,
+          'recommendation': 'This does not appear to be an orange.'
+        };
+        
         setState(() {
           _isLoading = false;
           _status = 'Not an orange';
-          _analysisResult = {
-            'isOrange': false,
-            'quality': 'unknown',
-            'colorConsistency': 0.0,
-            'surfaceIrregularities': 0.0,
-            'recommendation': 'This does not appear to be an orange.'
-          };
+          _analysisResult = results;
           _showResults = true;
         });
+        
+        // Save results to provider
+        ref.read(analysisResultProvider.notifier).state = results;
+        ref.read(showResultsProvider.notifier).state = true;
+        
         _animationController.forward(from: 0.0);
         return;
       }
@@ -312,20 +335,26 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
         recommendation = 'This orange appears to be of good quality.';
       }
       
+      final results = {
+        'isOrange': true,
+        'quality': quality,
+        'colorConsistency': qualityResults['colorConsistency'],
+        'surfaceIrregularities': qualityResults['surfaceIrregularities'],
+        'hasMold': qualityResults['hasMold'],
+        'hasDarkSpots': qualityResults['hasDarkSpots'],
+        'recommendation': recommendation
+      };
+      
       setState(() {
         _isLoading = false;
         _status = 'Analysis complete';
-        _analysisResult = {
-          'isOrange': true,
-          'quality': quality,
-          'colorConsistency': qualityResults['colorConsistency'],
-          'surfaceIrregularities': qualityResults['surfaceIrregularities'],
-          'hasMold': qualityResults['hasMold'],
-          'hasDarkSpots': qualityResults['hasDarkSpots'],
-          'recommendation': recommendation
-        };
+        _analysisResult = results;
         _showResults = true;
       });
+      
+      // Save results to provider
+      ref.read(analysisResultProvider.notifier).state = results;
+      ref.read(showResultsProvider.notifier).state = true;
       
       _animationController.forward(from: 0.0);
       

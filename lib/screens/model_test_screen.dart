@@ -315,6 +315,10 @@ class _ModelTestScreenState extends ConsumerState<ModelTestScreen> {
     if (_imageFile == null) return;
     
     try {
+      setState(() {
+        _isLoading = true;
+      });
+      
       // Initialize classifier and classify
       final classifier = OrangeClassifier();
       await classifier.loadModels();

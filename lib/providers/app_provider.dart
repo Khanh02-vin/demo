@@ -237,4 +237,8 @@ class TensorFlowService {
 
 // Image persistence providers
 final selectedImageProvider = StateProvider<String?>((ref) => null);
-final selectedCameraImageProvider = StateProvider<String?>((ref) => null); 
+final selectedCameraImageProvider = StateProvider<String?>((ref) => null);
+
+// Analysis results persistence providers
+final analysisResultProvider = StateProvider<Map<String, dynamic>?>((ref) => null);
+final showResultsProvider = StateProvider<bool>((ref) => false); 
