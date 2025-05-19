@@ -1,7 +1,7 @@
 # Hide Makefiles from GitHub language statistics
-Makefile linguist-vendored=true
-*.mk linguist-vendored=true
-Makefile.* linguist-vendored=true
+Makefile linguist-detectable=false
+*.mk linguist-detectable=false
+Makefile.* linguist-detectable=false
 
 # Also exclude build artifacts from language statistics
-build/* linguist-generated=true 
+build/* linguist-generated=true

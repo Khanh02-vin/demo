@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:go_router/go_router.dart';
 import '../providers/history_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ColorDetectorScreen extends ConsumerStatefulWidget {
   const ColorDetectorScreen({super.key});
@@ -30,13 +31,14 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
     _animation = CurvedAnimation(
       parent: _animationController,
-      curve: Curves.easeInOut,
+      curve: Curves.easeOutBack,
     );
+    _animationController.forward();
   }
   
   @override
@@ -252,107 +254,68 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
         _status = 'Analyzing image...';
       });
       
-      // Perform analysis
-      final startTime = DateTime.now();
-      final isLikelyOrange = await isLikelyOrangeByColor(imageFile);
-      final qualityAnalysis = await analyzeImageQuality(imageFile);
-      final endTime = DateTime.now();
-      final processingTime = endTime.difference(startTime).inMilliseconds;
+      // Check if this is an orange by color first
+      final isOrange = await isLikelyOrangeByColor(imageFile);
       
-      // Calculate quality score based on analysis
-      double qualityScore = 1.0;
-      if (qualityAnalysis['hasMold']) {
-        qualityScore -= qualityAnalysis['moldConfidence'] * 0.8;
+      if (!isOrange) {
+        setState(() {
+          _isLoading = false;
+          _status = 'Not an orange';
+          _analysisResult = {
+            'isOrange': false,
+            'quality': 'unknown',
+            'colorConsistency': 0.0,
+            'surfaceIrregularities': 0.0,
+            'recommendation': 'This does not appear to be an orange.'
+          };
+          _showResults = true;
+        });
+        _animationController.forward(from: 0.0);
+        return;
       }
-      if (qualityAnalysis['hasDarkSpots']) {
-        qualityScore -= qualityAnalysis['darkSpotsConfidence'] * 0.6;
-      }
-      if (qualityAnalysis['texturalAnomaly']) {
-        qualityScore -= 0.3;
-      }
-      if (qualityAnalysis['surfaceIrregularities'] > 0.1) {
-        qualityScore -= qualityAnalysis['surfaceIrregularities'] * 0.5;
-      }
-      qualityScore *= qualityAnalysis['colorConsistency'];
-      qualityScore = qualityScore.clamp(0.0, 1.0);
       
-      // Determine result
-      String resultLabel;
-      Color resultColor;
-      IconData resultIcon;
+      // If it is an orange, analyze its quality
+      final qualityResults = await analyzeImageQuality(imageFile);
       
-      if (!isLikelyOrange) {
-        resultLabel = 'Not an Orange';
-        resultColor = Colors.grey;
-        resultIcon = Icons.help_outline;
-      } else if (qualityAnalysis['hasMold'] && qualityAnalysis['moldConfidence'] > 0.3) {
-        resultLabel = 'Moldy';
-        resultColor = Colors.red.shade800;
-        resultIcon = Icons.warning_amber_rounded;
-      } else if (qualityAnalysis['hasDarkSpots'] && qualityAnalysis['darkSpotsConfidence'] > 0.4) {
-        resultLabel = 'Rotten';
-        resultColor = Colors.red;
-        resultIcon = Icons.sentiment_very_dissatisfied;
-      } else if (qualityAnalysis['surfaceIrregularities'] > 0.4) {
-        resultLabel = 'Surface Damaged';
-        resultColor = Colors.orange;
-        resultIcon = Icons.offline_bolt_outlined;
-      } else if (qualityScore < 0.7) {
-        resultLabel = 'Fair Quality';
-        resultColor = Colors.amber;
-        resultIcon = Icons.sentiment_neutral;
+      // Determine overall quality based on analysis
+      String quality;
+      String recommendation;
+      
+      if (qualityResults['hasMold'] == true) {
+        quality = 'Poor - Mold Detected';
+        recommendation = 'This orange shows signs of mold and should not be consumed.';
+      } else if (qualityResults['hasDarkSpots'] == true) {
+        quality = 'Poor - Dark Spots';
+        recommendation = 'This orange has significant dark spots and may have quality issues.';
+      } else if (qualityResults['colorConsistency'] < 0.7) {
+        quality = 'Fair - Color Inconsistency';
+        recommendation = 'This orange has some color variations that may indicate ripeness issues.';
+      } else if (qualityResults['surfaceIrregularities'] > 0.3) {
+        quality = 'Fair - Surface Issues';
+        recommendation = 'This orange has some surface irregularities but should be edible.';
       } else {
-        resultLabel = 'Good Quality';
-        resultColor = Colors.green;
-        resultIcon = Icons.check_circle;
+        quality = 'Good';
+        recommendation = 'This orange appears to be of good quality.';
       }
       
-      // Store results
       setState(() {
-        _analysisResult = {
-          'isOrange': isLikelyOrange,
-          'label': resultLabel,
-          'color': resultColor,
-          'icon': resultIcon,
-          'qualityScore': qualityScore,
-          'hasMold': qualityAnalysis['hasMold'],
-          'moldConfidence': qualityAnalysis['moldConfidence'],
-          'hasDarkSpots': qualityAnalysis['hasDarkSpots'],
-          'darkSpotsConfidence': qualityAnalysis['darkSpotsConfidence'],
-          'colorConsistency': qualityAnalysis['colorConsistency'],
-          'surfaceIrregularities': qualityAnalysis['surfaceIrregularities'],
-          'processingTime': processingTime,
-        };
         _isLoading = false;
-        _status = 'Ready to test images';
+        _status = 'Analysis complete';
+        _analysisResult = {
+          'isOrange': true,
+          'quality': quality,
+          'colorConsistency': qualityResults['colorConsistency'],
+          'surfaceIrregularities': qualityResults['surfaceIrregularities'],
+          'hasMold': qualityResults['hasMold'],
+          'hasDarkSpots': qualityResults['hasDarkSpots'],
+          'recommendation': recommendation
+        };
         _showResults = true;
-        _savingToHistory = true;
       });
       
-      _animationController.reset();
-      _animationController.forward();
-      
-      // Save to history
-      await _saveToHistory(
-        imageFile.path,
-        isLikelyOrange,
-        resultLabel,
-        resultColor,
-        qualityScore,
-        {
-          'colorConsistency': qualityAnalysis['colorConsistency'],
-          'surfaceIrregularities': qualityAnalysis['surfaceIrregularities'],
-          'moldConfidence': qualityAnalysis['moldConfidence'],
-          'darkSpotsConfidence': qualityAnalysis['darkSpotsConfidence'],
-        },
-      );
-      
-      setState(() {
-        _savingToHistory = false;
-      });
+      _animationController.forward(from: 0.0);
       
     } catch (e) {
-      debugPrint('Error: $e');
       setState(() {
         _isLoading = false;
         _status = 'Error: $e';
@@ -360,599 +323,520 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
     }
   }
   
-  Future<void> _saveToHistory(
-    String imagePath,
-    bool isOrange,
-    String result,
-    Color resultColor,
-    double qualityScore,
-    Map<String, dynamic> detailedMetrics,
-  ) async {
+  Future<void> _saveToHistory() async {
+    if (_analysisResult == null || _selectedImage == null || _savingToHistory) {
+      return;
+    }
+    
+    setState(() {
+      _savingToHistory = true;
+    });
+    
     try {
       final historyService = ref.read(historyServiceProvider);
+      
+      // Get color based on quality
+      final quality = _analysisResult!['quality'] as String;
+      Color resultColor;
+      
+      if (quality.toLowerCase().contains('good')) {
+        resultColor = Colors.green;
+      } else if (quality.toLowerCase().contains('fair')) {
+        resultColor = Colors.orange;
+      } else {
+        resultColor = Colors.red;
+      }
+      
+      // Calculate quality score
+      double qualityScore = 0.0;
+      if (_analysisResult!['isOrange'] as bool) {
+        qualityScore = (_analysisResult!['colorConsistency'] as double) * 0.6 + 
+                      (1.0 - (_analysisResult!['surfaceIrregularities'] as double)) * 0.4;
+      }
+      
       await historyService.saveHistoryItem(
-        imagePath,
-        isOrange,
-        result,
+        _selectedImage!.path,
+        _analysisResult!['isOrange'] as bool,
+        _analysisResult!['quality'] as String,
         resultColor,
         qualityScore,
-        detailedMetrics,
+        {
+          'colorConsistency': _analysisResult!['colorConsistency'],
+          'surfaceIrregularities': _analysisResult!['surfaceIrregularities'],
+        },
       );
       
-      // Refresh the history provider
+      // Refresh history
       refreshHistory(ref);
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Saved to history'),
+            backgroundColor: Colors.green,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        );
+      }
     } catch (e) {
-      debugPrint('Error saving to history: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error saving: $e'),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _savingToHistory = false;
+        });
+      }
     }
   }
   
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
-        title: const Text('Orange Color Detector'),
-        backgroundColor: Colors.orange.shade700,
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.history),
-            tooltip: 'View History',
-            onPressed: () => context.go('/history'),
+        title: Text(
+          'Orange Detector',
+          style: GoogleFonts.poppins(
+            fontSize: 22,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
           ),
-        ],
+        ),
       ),
       body: SafeArea(
         child: Column(
           children: [
-            // Status area
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              color: Colors.orange.shade800,
-              child: Row(
-                children: [
-                  const Icon(Icons.info_outline, color: Colors.white),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      _savingToHistory ? 'Saving to history...' : _status,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            
             Expanded(
-              child: _selectedImage == null
-                  ? _buildInitialScreen()
-                  : _buildAnalysisScreen(),
-            ),
-            
-            // Bottom action buttons
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: const Color(0xFF1E1E1E),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 5,
-                    offset: const Offset(0, -3),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: _isLoading || _savingToHistory ? null : () => _processImage(ImageSource.gallery),
-                      icon: const Icon(Icons.photo_library),
-                      label: const Text('Gallery'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue.shade600,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 16),
+                      Text(
+                        'Orange Quality Detector',
+                        style: GoogleFonts.poppins(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: _isLoading || _savingToHistory ? null : () => _processImage(ImageSource.camera),
-                      icon: const Icon(Icons.camera_alt),
-                      label: const Text('Camera'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green.shade600,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                      Text(
+                        'Take or select a photo of an orange to check its quality',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: Colors.grey[400],
                         ),
                       ),
-                    ),
+                      const SizedBox(height: 24),
+                      _buildImageSection(),
+                      const SizedBox(height: 24),
+                      if (_showResults && _analysisResult != null)
+                        _buildResultsSection(),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
+            _buildBottomActions(),
           ],
         ),
       ),
     );
   }
-  
-  Widget _buildInitialScreen() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [const Color(0xFF2A2A2A), const Color(0xFF121212)],
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Icon
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.orange.shade800.withOpacity(0.2),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.camera_enhance,
-              size: 80,
-              color: Colors.orange.shade500,
-            ),
-          ),
-          const SizedBox(height: 24),
-          
-          // Title
-          const Text(
-            'Orange Quality Detector',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.orange,
-            ),
-          ),
-          const SizedBox(height: 16),
-          
-          // Description
-          const Text(
-            'Take a photo or select an image of an orange to analyze its quality',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white70,
-            ),
-          ),
-          const SizedBox(height: 40),
-          
-          // Instruction steps
-          _buildInstructionStep(1, 'Select an image from gallery or take a photo'),
-          const SizedBox(height: 12),
-          _buildInstructionStep(2, 'Wait for analysis to complete'),
-          const SizedBox(height: 12),
-          _buildInstructionStep(3, 'View the quality assessment results'),
-        ],
-      ),
-    );
-  }
-  
-  Widget _buildInstructionStep(int number, String text) {
-    return Row(
+
+  Widget _buildImageSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            color: Colors.orange.shade700,
-            shape: BoxShape.circle,
-          ),
-          child: Center(
-            child: Text(
-              number.toString(),
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+        AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) {
+            return Transform.scale(
+              scale: _animation.value,
+              child: child,
+            );
+          },
+          child: Container(
+            height: 300,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: _selectedImage == null 
+                    ? [const Color(0xFF2C2C2E), const Color(0xFF1C1C1E)]
+                    : [Colors.orange.shade800.withOpacity(0.8), Colors.deepOrange.shade600.withOpacity(0.8)],
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  blurRadius: 15,
+                  offset: const Offset(0, 8),
+                ),
+              ],
             ),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.white,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: _selectedImage == null
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.camera_alt,
+                            size: 64,
+                            color: Colors.grey[400],
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'No image selected',
+                            style: GoogleFonts.poppins(
+                              fontSize: 16,
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            _status,
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Image.file(
+                          _selectedImage!,
+                          fit: BoxFit.cover,
+                        ),
+                        if (_isLoading)
+                          Container(
+                            color: Colors.black54,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    _status,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
             ),
           ),
         ),
       ],
     );
   }
-  
-  Widget _buildAnalysisScreen() {
-    return Container(
-      color: const Color(0xFF121212),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Image preview
-            ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Container(
-                height: 260,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: Image.file(
-                  _selectedImage!,
-                  fit: BoxFit.cover,
-                ),
-              ),
+
+  Widget _buildResultsSection() {
+    final result = _analysisResult!;
+    final isOrange = result['isOrange'] as bool;
+    final quality = result['quality'] as String;
+    final recommendation = result['recommendation'] as String;
+    
+    Color statusColor;
+    IconData statusIcon;
+    
+    if (!isOrange) {
+      statusColor = Colors.grey;
+      statusIcon = Icons.help_outline;
+    } else if (quality.toLowerCase().contains('good')) {
+      statusColor = Colors.green;
+      statusIcon = Icons.check_circle;
+    } else if (quality.toLowerCase().contains('fair')) {
+      statusColor = Colors.orange;
+      statusIcon = Icons.info;
+    } else {
+      statusColor = Colors.red;
+      statusIcon = Icons.warning;
+    }
+    
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Transform.scale(
+          scale: _animation.value,
+          child: child,
+        );
+      },
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.only(bottom: 24),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              const Color(0xFF2C2C2E),
+              const Color(0xFF1C1C1E),
+            ],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
             ),
-            const SizedBox(height: 24),
-            
-            // Results section
-            if (_isLoading || _savingToHistory)
-              Center(
-                child: Column(
-                  children: [
-                    const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    statusIcon,
+                    color: statusColor,
+                    size: 28,
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    isOrange ? 'Orange Quality: $quality' : 'Not an Orange',
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
-                    const SizedBox(height: 16),
-                    Text(
-                      _savingToHistory ? 'Saving to history...' : 'Analyzing image...',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Text(
+                recommendation,
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  color: Colors.grey[300],
                 ),
               ),
-              
-            if (_showResults && _analysisResult != null && !_savingToHistory)
-              FadeTransition(
-                opacity: _animation,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Main result card
-                    Card(
-                      elevation: 4,
-                      color: const Color(0xFF1E1E1E),
+              const SizedBox(height: 20),
+              if (isOrange) ...[
+                _buildQualityIndicator(
+                  label: 'Color Consistency',
+                  value: result['colorConsistency'] as double,
+                  color: Colors.blue,
+                ),
+                const SizedBox(height: 12),
+                _buildQualityIndicator(
+                  label: 'Surface Quality',
+                  value: 1.0 - (result['surfaceIrregularities'] as double),
+                  color: Colors.purple,
+                ),
+              ],
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: _savingToHistory ? null : _saveToHistory,
+                    icon: Icon(
+                      _savingToHistory ? Icons.hourglass_empty : Icons.save_alt,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      _savingToHistory ? 'Saving...' : 'Save to History',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepOrange.shade600,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            Icon(
-                              _analysisResult!['icon'] as IconData,
-                              size: 60,
-                              color: _analysisResult!['color'] as Color,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              _analysisResult!['label'] as String,
-                              style: TextStyle(
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                color: _analysisResult!['color'] as Color,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              _analysisResult!['isOrange'] 
-                                  ? 'This appears to be an orange'
-                                  : 'This does not appear to be an orange',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.white70,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            _buildQualityBar(
-                              _analysisResult!['qualityScore'] as double,
-                              _analysisResult!['color'] as Color,
-                            ),
-                          ],
-                        ),
-                      ),
+                      elevation: 4,
                     ),
-                    
-                    const SizedBox(height: 20),
-                    
-                    // Detailed metrics
-                    const Text(
-                      'Detailed Analysis',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    
-                    // Metrics cards
-                    _buildMetricCard(
-                      'Color Consistency', 
-                      _analysisResult!['colorConsistency'] as double,
-                      Icons.color_lens_outlined,
-                      Colors.blue,
-                      'Higher is better',
-                    ),
-                    
-                    const SizedBox(height: 8),
-                    
-                    _buildMetricCard(
-                      'Surface Quality', 
-                      1.0 - (_analysisResult!['surfaceIrregularities'] as double),
-                      Icons.layers_outlined,
-                      Colors.teal,
-                      'Higher is better',
-                    ),
-                    
-                    const SizedBox(height: 8),
-                    
-                    _buildRiskCard(
-                      'Mold Risk', 
-                      _analysisResult!['moldConfidence'] as double,
-                      Icons.bug_report_outlined,
-                      Colors.purple,
-                      'Lower is better',
-                    ),
-                    
-                    const SizedBox(height: 8),
-                    
-                    _buildRiskCard(
-                      'Rot Risk', 
-                      _analysisResult!['darkSpotsConfidence'] as double,
-                      Icons.warning_amber_outlined,
-                      Colors.deepOrange,
-                      'Lower is better',
-                    ),
-                    
-                    const SizedBox(height: 16),
-                    
-                    // Processing time
-                    Center(
-                      child: Text(
-                        'Analysis took ${_analysisResult!['processingTime']} ms',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.white54,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
-  
-  Widget _buildQualityBar(double value, Color color) {
+
+  Widget _buildQualityIndicator({
+    required String label,
+    required double value,
+    required Color color,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Quality Score',
-              style: TextStyle(
+            Text(
+              label,
+              style: GoogleFonts.poppins(
                 fontSize: 14,
-                color: Colors.white70,
+                color: Colors.grey[400],
               ),
             ),
             Text(
               '${(value * 100).toStringAsFixed(0)}%',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: color,
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
-        Stack(
-          children: [
-            // Background
-            Container(
-              height: 10,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade800,
-                borderRadius: BorderRadius.circular(5),
-              ),
-            ),
-            // Progress
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              height: 10,
-              width: MediaQuery.of(context).size.width * 0.7 * value,
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(5),
-              ),
-            ),
-          ],
+        const SizedBox(height: 6),
+        AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) {
+            return Stack(
+              children: [
+                Container(
+                  height: 8,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.grey[800],
+                  ),
+                ),
+                Container(
+                  height: 8,
+                  width: MediaQuery.of(context).size.width * 0.8 * value * _animation.value,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        color.withOpacity(0.7),
+                        color,
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: color.withOpacity(0.5),
+                        blurRadius: 6,
+                        offset: const Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ],
     );
   }
-  
-  Widget _buildMetricCard(String title, double value, IconData icon, Color color, String note) {
-    return Card(
-      elevation: 2,
-      color: const Color(0xFF252525),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+
+  Widget _buildBottomActions() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      decoration: BoxDecoration(
+        color: const Color(0xFF1E1E1E),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 10,
+            offset: const Offset(0, -2),
+          ),
+        ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                icon,
-                color: color,
-                size: 24,
-              ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: _buildActionButton(
+              onPressed: _isLoading ? null : () => _processImage(ImageSource.gallery),
+              color: Colors.deepPurple,
+              icon: Icons.photo_library,
+              label: 'Gallery',
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    note,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.white60,
-                    ),
-                  ),
-                ],
-              ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: _buildActionButton(
+              onPressed: _isLoading ? null : () => _processImage(ImageSource.camera),
+              color: Colors.deepOrange,
+              icon: Icons.camera_alt,
+              label: 'Camera',
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: _getMetricColor(value).withOpacity(0.2),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                '${(value * 100).toStringAsFixed(0)}%',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: _getMetricColor(value),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
-  
-  Widget _buildRiskCard(String title, double value, IconData icon, Color color, String note) {
-    return Card(
-      elevation: 2,
-      color: const Color(0xFF252525),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+
+  Widget _buildActionButton({
+    required VoidCallback? onPressed,
+    required Color color,
+    required IconData icon,
+    required String label,
+  }) {
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      icon: Icon(
+        icon,
+        color: Colors.white,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                icon,
-                color: color,
-                size: 24,
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    note,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.white60,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: _getRiskColor(value).withOpacity(0.2),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                '${(value * 100).toStringAsFixed(0)}%',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: _getRiskColor(value),
-                ),
-              ),
-            ),
-          ],
+      label: Text(
+        label,
+        style: GoogleFonts.poppins(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
         ),
       ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        elevation: 4,
+      ),
     );
-  }
-  
-  Color _getMetricColor(double value) {
-    if (value >= 0.8) return Colors.green.shade400;
-    if (value >= 0.6) return Colors.lime.shade400;
-    if (value >= 0.4) return Colors.amber.shade400;
-    if (value >= 0.2) return Colors.orange.shade400;
-    return Colors.red.shade400;
-  }
-  
-  Color _getRiskColor(double value) {
-    if (value <= 0.2) return Colors.green.shade400;
-    if (value <= 0.4) return Colors.lime.shade400;
-    if (value <= 0.6) return Colors.amber.shade400;
-    if (value <= 0.8) return Colors.orange.shade400;
-    return Colors.red.shade400;
   }
 } 
