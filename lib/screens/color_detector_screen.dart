@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../providers/history_provider.dart';
 import '../providers/app_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 
 class ColorDetectorScreen extends ConsumerStatefulWidget {
   const ColorDetectorScreen({super.key});
@@ -446,6 +447,163 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
     }
   }
   
+  void _resetAnalysis() {
+    setState(() {
+      _selectedImage = null;
+      _analysisResult = null;
+      _showResults = false;
+      _isLoading = false;
+      _status = 'Ready to test images';
+    });
+    
+    // Clear providers
+    ref.read(selectedImageProvider.notifier).state = null;
+    ref.read(analysisResultProvider.notifier).state = null;
+    ref.read(showResultsProvider.notifier).state = false;
+    
+    // Reset animation
+    _animationController.reset();
+    _animationController.forward();
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Analysis reset'),
+        backgroundColor: Colors.blue,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+    );
+  }
+  
+  Future<void> _loadTestImage() async {
+    setState(() {
+      _isLoading = true;
+      _status = 'Loading test image...';
+      _showResults = false;
+    });
+    
+    try {
+      // Clear previous results
+      ref.read(analysisResultProvider.notifier).state = null;
+      ref.read(showResultsProvider.notifier).state = false;
+      
+      // Randomly choose between good and bad orange samples
+      final Random random = Random();
+      final bool useGoodSample = random.nextBool();
+      
+      // Define paths for test images
+      final String category = useGoodSample ? 'Orange_Good' : 'Orange_Bad';
+      final String fileName = useGoodSample 
+          ? 'fresh_${1000 + random.nextInt(99)}.jpg'  // Good oranges are named fresh_1000 to fresh_1099
+          : 'black_${1276 + random.nextInt(99)}.jpg'; // Bad oranges are named black_1276 to black_1375
+      
+      final String assetPath = 'assets/images/old_oranges_data/test_set/$category/$fileName';
+      
+      debugPrint('Loading test image: $assetPath');
+      
+      // Create a temporary file from the asset
+      final tempDir = await Directory.systemTemp.createTemp('orange_test');
+      final tempFile = File('${tempDir.path}/test_orange.jpg');
+      
+      // Write the asset to the temporary file
+      final byteData = await DefaultAssetBundle.of(context).load(assetPath);
+      final buffer = byteData.buffer.asUint8List();
+      await tempFile.writeAsBytes(buffer);
+      
+      setState(() {
+        _selectedImage = tempFile;
+        _status = 'Analyzing test image ($category)...';
+      });
+      
+      // Save to provider for persistence
+      ref.read(selectedImageProvider.notifier).state = tempFile.path;
+      
+      // Analyze the image
+      final isOrange = await isLikelyOrangeByColor(tempFile);
+      
+      if (!isOrange) {
+        final results = {
+          'isOrange': false,
+          'quality': 'unknown',
+          'colorConsistency': 0.0,
+          'surfaceIrregularities': 0.0,
+          'recommendation': 'This does not appear to be an orange.'
+        };
+        
+        setState(() {
+          _isLoading = false;
+          _status = 'Not an orange';
+          _analysisResult = results;
+          _showResults = true;
+        });
+        
+        // Save results to provider
+        ref.read(analysisResultProvider.notifier).state = results;
+        ref.read(showResultsProvider.notifier).state = true;
+        
+        _animationController.forward(from: 0.0);
+        return;
+      }
+      
+      // If it is an orange, analyze its quality
+      final qualityResults = await analyzeImageQuality(tempFile);
+      
+      // Determine overall quality based on analysis
+      String quality;
+      String recommendation;
+      
+      if (qualityResults['hasMold'] == true) {
+        quality = 'Poor - Mold Detected';
+        recommendation = 'This orange shows signs of mold and should not be consumed.';
+      } else if (qualityResults['hasDarkSpots'] == true) {
+        quality = 'Poor - Dark Spots';
+        recommendation = 'This orange has significant dark spots and may have quality issues.';
+      } else if (qualityResults['colorConsistency'] < 0.7) {
+        quality = 'Fair - Color Inconsistency';
+        recommendation = 'This orange has some color variations that may indicate ripeness issues.';
+      } else if (qualityResults['surfaceIrregularities'] > 0.3) {
+        quality = 'Fair - Surface Issues';
+        recommendation = 'This orange has some surface irregularities but should be edible.';
+      } else {
+        quality = 'Good';
+        recommendation = 'This orange appears to be of good quality.';
+      }
+      
+      final results = {
+        'isOrange': true,
+        'quality': quality,
+        'colorConsistency': qualityResults['colorConsistency'],
+        'surfaceIrregularities': qualityResults['surfaceIrregularities'],
+        'hasMold': qualityResults['hasMold'],
+        'hasDarkSpots': qualityResults['hasDarkSpots'],
+        'recommendation': recommendation,
+        'actualCategory': category // Add information about the actual category
+      };
+      
+      setState(() {
+        _isLoading = false;
+        _status = 'Analysis complete';
+        _analysisResult = results;
+        _showResults = true;
+      });
+      
+      // Save results to provider
+      ref.read(analysisResultProvider.notifier).state = results;
+      ref.read(showResultsProvider.notifier).state = true;
+      
+      _animationController.forward(from: 0.0);
+      
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        _status = 'Error: $e';
+      });
+      debugPrint('Error loading test image: $e');
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -463,6 +621,17 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
             color: Colors.white,
           ),
         ),
+        actions: [
+          if (_selectedImage != null)
+            IconButton(
+              icon: const Icon(
+                Icons.refresh,
+                color: Colors.white,
+              ),
+              tooltip: 'Reset Analysis',
+              onPressed: _resetAnalysis,
+            ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -614,6 +783,7 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
     final isOrange = result['isOrange'] as bool;
     final quality = result['quality'] as String;
     final recommendation = result['recommendation'] as String;
+    final String? actualCategory = result['actualCategory'] as String?;
     
     Color statusColor;
     IconData statusIcon;
@@ -692,6 +862,28 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
                   color: Colors.grey[300],
                 ),
               ),
+              if (actualCategory != null) ...[
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: actualCategory.contains('Good') ? Colors.green.withOpacity(0.2) : Colors.red.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: actualCategory.contains('Good') ? Colors.green : Colors.red,
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    'Test Image Category: ${actualCategory.contains('Good') ? 'Good Orange' : 'Bad Orange'}',
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: actualCategory.contains('Good') ? Colors.green[300] : Colors.red[300],
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: 20),
               if (isOrange) ...[
                 _buildQualityIndicator(
@@ -725,6 +917,30 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepOrange.shade600,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      elevation: 4,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  ElevatedButton.icon(
+                    onPressed: _resetAnalysis,
+                    icon: const Icon(
+                      Icons.refresh,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      'Reset',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue.shade600,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                       shape: RoundedRectangleBorder(
@@ -838,13 +1054,22 @@ class _ColorDetectorScreenState extends ConsumerState<ColorDetectorScreen> with 
               label: 'Gallery',
             ),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 12),
           Expanded(
             child: _buildActionButton(
               onPressed: _isLoading ? null : () => _processImage(ImageSource.camera),
               color: Colors.deepOrange,
               icon: Icons.camera_alt,
               label: 'Camera',
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: _buildActionButton(
+              onPressed: _isLoading ? null : _loadTestImage,
+              color: Colors.teal,
+              icon: Icons.image,
+              label: 'Test Image',
             ),
           ),
         ],
