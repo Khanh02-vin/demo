@@ -1,0 +1,30 @@
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/FrameInfoProxyAPIDelegate.swift":
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/FrameInfoProxyAPIDelegate.d"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/FrameInfoProxyAPIDelegate.dia"
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/FrameInfoProxyAPIDelegate.o"
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/FrameInfoProxyAPIDelegate.swiftconstvalues"
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/FrameInfoProxyAPIDelegate.swiftdeps"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/GetTrustResultResponseProxyAPIDelegate.swift":
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/GetTrustResultResponseProxyAPIDelegate.d"
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/GetTrustResultResponseProxyAPIDelegate.o"
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/GetTrustResultResponseProxyAPIDelegate.swiftconstvalues"
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/GetTrustResultResponseProxyAPIDelegate.swiftdeps"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/GetTrustResultResponseProxyAPIDelegate.dia"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/GetTrustResultResponse.swift":
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/GetTrustResultResponse.o"
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/GetTrustResultResponse.d"
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/GetTrustResultResponse.swiftconstvalues"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/GetTrustResultResponse.dia"
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/GetTrustResultResponse.swiftdeps"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/HTTPCookieStoreProxyAPIDelegate.swift":
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/HTTPCookieStoreProxyAPIDelegate.swiftconstvalues"
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/HTTPCookieStoreProxyAPIDelegate.swiftdeps"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/HTTPCookieStoreProxyAPIDelegate.dia"
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/HTTPCookieStoreProxyAPIDelegate.o"
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/HTTPCookieStoreProxyAPIDelegate.d"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/HTTPCookieProxyAPIDelegate.swift":
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/HTTPCookieProxyAPIDelegate.o"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/HTTPCookieProxyAPIDelegate.dia"
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/HTTPCookieProxyAPIDelegate.d"
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/HTTPCookieProxyAPIDelegate.swiftconstvalues"
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/HTTPCookieProxyAPIDelegate.swiftdeps"

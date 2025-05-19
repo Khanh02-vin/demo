@@ -1,0 +1,24 @@
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/NSObjectProxyAPIDelegate.swift":
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/NSObjectProxyAPIDelegate.o"
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/NSObjectProxyAPIDelegate.swiftdeps"
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/NSObjectProxyAPIDelegate.swiftconstvalues"
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/NSObjectProxyAPIDelegate.d"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/NSObjectProxyAPIDelegate.dia"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/PreferencesProxyAPIDelegate.swift":
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/PreferencesProxyAPIDelegate.swiftdeps"
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/PreferencesProxyAPIDelegate.o"
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/PreferencesProxyAPIDelegate.swiftconstvalues"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/PreferencesProxyAPIDelegate.dia"
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/PreferencesProxyAPIDelegate.d"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/ProxyAPIRegistrar.swift":
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ProxyAPIRegistrar.o"
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ProxyAPIRegistrar.d"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ProxyAPIRegistrar.dia"
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ProxyAPIRegistrar.swiftconstvalues"
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ProxyAPIRegistrar.swiftdeps"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/ScriptMessageHandlerProxyAPIDelegate.swift":
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScriptMessageHandlerProxyAPIDelegate.o"
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScriptMessageHandlerProxyAPIDelegate.swiftdeps"
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScriptMessageHandlerProxyAPIDelegate.d"
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScriptMessageHandlerProxyAPIDelegate.swiftconstvalues"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/ScriptMessageHandlerProxyAPIDelegate.dia"

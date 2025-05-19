@@ -1,0 +1,24 @@
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/UIViewProxyAPIDelegate.swift":
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/UIViewProxyAPIDelegate.swiftdeps"
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/UIViewProxyAPIDelegate.swiftconstvalues"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/UIViewProxyAPIDelegate.dia"
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/UIViewProxyAPIDelegate.o"
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/UIViewProxyAPIDelegate.d"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/URLCredentialProxyAPIDelegate.swift":
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/URLCredentialProxyAPIDelegate.swiftconstvalues"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/URLCredentialProxyAPIDelegate.dia"
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/URLCredentialProxyAPIDelegate.o"
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/URLCredentialProxyAPIDelegate.d"
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/URLCredentialProxyAPIDelegate.swiftdeps"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/UIDelegateProxyAPIDelegate.swift":
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/UIDelegateProxyAPIDelegate.swiftconstvalues"
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/UIDelegateProxyAPIDelegate.o"
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/UIDelegateProxyAPIDelegate.d"
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/UIDelegateProxyAPIDelegate.dia"
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/UIDelegateProxyAPIDelegate.swiftdeps"
+"/Users/maccredyreina/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/URLAuthenticationChallengeProxyAPIDelegate.swift":
+  diagnostics: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/URLAuthenticationChallengeProxyAPIDelegate.dia"
+  object: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/URLAuthenticationChallengeProxyAPIDelegate.o"
+  swift-dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/URLAuthenticationChallengeProxyAPIDelegate.swiftdeps"
+  const-values: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/URLAuthenticationChallengeProxyAPIDelegate.swiftconstvalues"
+  dependencies: "/Users/maccredyreina/Desktop/Temp/code 3 2/build/macos/Build/Intermediates.noindex/Pods.build/Debug/webview_flutter_wkwebview.build/Objects-normal/arm64/URLAuthenticationChallengeProxyAPIDelegate.d"
